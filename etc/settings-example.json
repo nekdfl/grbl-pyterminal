@@ -1,0 +1,52 @@
+{
+  "settings": {
+    "ftp": {
+      "user": "ftp-user",
+      "password": "ftp-password",
+      "host": "1.2.3.4",
+      "port": "21",
+      "timeout": "30",
+      "delay": "0.0"
+    },
+    "logger": {
+      "backupCount": 33,
+      "enableDebug": false
+    },
+    "urls": {
+      "yandex_base": "http://cabinet.tanker.yandex.net/",
+      "yandex_csv_request": "http://cabinet.tanker.yandex.net/orders/download-report",
+      "yandex_request_taskid": "http://cabinet.tanker.yandex.net/orders/task",
+      "yandex_base_logout": "http://cabinet.tanker.yandex.net/logout"
+    },
+    "interval": {
+      "daysbeforetoday": 45
+    },
+    "savetodir": "./downloads",
+    "auth": {
+      "ca1": {
+        "login": "1",
+        "password": "123"
+      },
+      "ca2": {
+        "login": "2",
+        "password": "123"
+      },
+      "ca3": {
+        "login": "3",
+        "password": "123"
+      },
+      "ca4": {
+        "login": "4",
+        "password": "123"
+      },
+      "ca5": {
+        "login": "5",
+        "password": "123"
+      },
+      "ca6": {
+        "login": "6",
+        "password": "123"
+      }
+    }
+  }
+}
