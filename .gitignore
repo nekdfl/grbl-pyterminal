@@ -1,0 +1,10 @@
+.venv
+.idea
+
+*.pyc
+pycache/
+db.sqlite3
+dev.env
+secret.env
+
+var/log/*.log
