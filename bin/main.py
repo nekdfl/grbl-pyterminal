@@ -12,17 +12,15 @@ Launcher.__load_dev_params
 директории доступен etc/{settings.json}, то директория считается rootdir, иначе программа завешается
 
 """
-
+from fixpathlib import dummy
+import os
+import sys
 import argparse
 import datetime
 import json
 import logging
-import os
-import pathlib
-import sys
-import time
-from pathlib import Path
-
+from logging.handlers import TimedRotatingFileHandler
+from logging import StreamHandler
 from lib import jsonconfigutils
 from mainapp import MainApp
 
@@ -33,6 +31,8 @@ class Launcher():
         self.__parser.add_argument("-c", "--config", action='store', dest="config",
                                    help="path to config file name")
         self.__parser.add_argument("-r", "--rootdir", action='store', dest="rootdir",
+                                   help="path to applition root directory")
+        self.__parser.add_argument("-l", "--serialportlist", action='store', dest="serialportlist",
                                    help="path to applition root directory")
 
     def __load_dev_params(self):
@@ -53,13 +53,18 @@ class Launcher():
             etc_path = os.path.join(os.getcwd(), "etc")
             var_path = os.path.join(os.getcwd(), "var")
             if os.path.isdir(bin_path) and os.path.isdir(etc_path) and os.path.isdir(var_path):
-                if os.path.isfile( os.path.join(os.getcwd(),"etc", self.__config_file_name)):
+                if os.path.isfile(os.path.join(os.getcwd(), "etc", self.__config_file_name)):
                     self.rootdir = os.path.realpath(os.getcwd())
 
         cwd = str(os.path.realpath(os.getcwd())).split("/")[-1]
         if cwd == "bin":
             os.chdir("../")
         check_cwd_is_root()
+
+    def __update_pythonpath(self):
+        pass
+
+        # sys.path.append()
 
     def __init__(self, appname, config_file_name=None, devmode=False):
         self.rootdir = None
@@ -72,6 +77,7 @@ class Launcher():
         self.__init_arg_parser()
         self.__load_args()
         self.__locate_root_dir()
+        self.__update_pythonpath()
 
     def __read_config(self, configname):
         try:
@@ -98,6 +104,8 @@ class Launcher():
         return None
 
     def parse_args(self):
+        if self.args.serialportlist:
+            MainApp.show_serial_port_list()
         if self.args.rootdir:
             self.rootdir = self.args.rootdir
         if self.args.config:
@@ -140,14 +148,13 @@ class Launcher():
         rotate_time = datetime.time(hour=0, minute=0, second=0)
 
         # # create time rotating file handler
-        fh = logging.handlers.TimedRotatingFileHandler(
-            fullpathlogdir, atTime=rotate_time, backupCount=self.__log_backup_count)
+        fh = TimedRotatingFileHandler(fullpathlogdir, atTime=rotate_time, backupCount=self.__log_backup_count)
         fh.setFormatter(formatter)
         self.logger.addHandler(fh)
 
     def __init_stream_log_handler(self, formatter):
         # # create console handler
-        ch = logging.StreamHandler()
+        ch = StreamHandler()
         ch.setFormatter(formatter)
         self.logger.addHandler(ch)
 
@@ -177,8 +184,7 @@ class Launcher():
 def runmainapp():
     try:
         app = MainApp()
-        app.init()
-        app.exec()
+        app.run()
     except Exception as ex:
         print(f"Fatal mainapp error: {ex}")
         sys.exit(1)
@@ -214,4 +220,5 @@ def main():
 
 
 if __name__ == '__main__':
+    dummy()
     main()
