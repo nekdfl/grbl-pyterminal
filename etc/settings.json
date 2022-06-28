@@ -1,7 +1,19 @@
 {
   "settings": {
-       "logger": {
-      "enableDebug": false
+  "portsettings" : {
+    "portname" : "",
+    "baudrate" : "115200"
+
+  },
+   "logger": {
+     "main": {
+       "logdir" : "var/log/",
+       "enable" : true,
+       "stdout" :  false,
+       "enableDebug": false,
+       "detailedLog" : false,
+       "backupCount" : 3
+     }
     }
   }
 }
