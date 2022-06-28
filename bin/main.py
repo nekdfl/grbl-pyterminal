@@ -123,7 +123,7 @@ class Launcher():
                 self.__gconfig, "/settings/logger/main/detailedLog", False))
 
             self.__log_enable_stdout = bool(
-                jsonconfigutils.getConfigValue(self.__gconfig, "/settings/logger/stdout", False))
+                jsonconfigutils.getConfigValue(self.__gconfig, "/settings/logger/main/stdout", False))
 
             self.__log_dir = jsonconfigutils.getConfigValue(
                 self.__gconfig, "/settings/logger/main/logdir", "var/log/")
