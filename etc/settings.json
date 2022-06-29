@@ -5,6 +5,11 @@
     "baudrate" : "115200"
 
   },
+    "window" : {
+      "width" : 128,
+      "height" : 32
+    },
+
    "logger": {
      "main": {
        "logdir" : "var/log/",
